@@ -1,6 +1,10 @@
 # check si DOM ready
+<<<<<<< HEAD
 $(document).on('turbolinks:load', ->
 
+=======
+jQuery ->
+>>>>>>> 63a1077... Don't mind me, please continue what you were doing with that thick leaf of yours
 	# ajout d'un nouveau user
 	i = 1000
 	add_user = (name, id)->
@@ -14,13 +18,18 @@ $(document).on('turbolinks:load', ->
 					</select> 
 					<input type='hidden' name='medium[shared_withs_attributes]["+i+"][entity_id]' value="+id+">
 					<a href='#' class='remove_user'>Remove this user</a>
+<<<<<<< HEAD
 				</div>")
 			i++
 
+=======
+				</div>
+				")
+	++i
+>>>>>>> 63a1077... Don't mind me, please continue what you were doing with that thick leaf of yours
 	#supression du user ciblé
 	$("#users_added").on("click",".remove_user" ,(e) ->
 		$(this).parent().remove()
-		# la méthode non obsolète defaultPrevented ne fonctionne pas
 		e.preventDefault()
 		)
 
