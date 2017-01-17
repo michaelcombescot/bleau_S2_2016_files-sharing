@@ -16,6 +16,7 @@ class Medium < ApplicationRecord
 
 	# chercher dans tous les fichiers du site
 	scope :search_all, -> (search) { where(Medium.arel_table[:name].matches("%#{search}%").and(Medium.arel_table[:visible_to_all].eq(true))) }
+	scope :order_by_date, -> { order("created_at DESC") }
 
 	# chercher dans tous les fichiers uploadé par le current user
   	scope :search_in_my_files, -> (current_user, search = "") { 
@@ -74,11 +75,7 @@ class Medium < ApplicationRecord
 	private
 
 	def self.related_groups_entities_ids(current_user)
-		ids = []
-		Group.my_related_groups(current_user).each do |g|
-			ids << g.entity.id
-		end
-		return ids
+		Group.my_related_groups(current_user).map { |g| g.entity.id }
 	end
 
   	def update_file_size_and_extension
