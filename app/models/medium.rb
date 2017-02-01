@@ -11,9 +11,6 @@ class Medium < ApplicationRecord
 
 	accepts_nested_attributes_for :shared_withs, reject_if: lambda{ |a| a[:selected] == '0'}
 
-	# svg de la taille et de l'extension du fichier
-	before_save :update_file_size_and_extension
-
 	# chercher dans tous les fichiers du site
 	scope :search_all, -> (search) { where(Medium.arel_table[:name].matches("%#{search}%").and(Medium.arel_table[:visible_to_all].eq(true))) }
 	scope :order_by_date, -> { order("created_at DESC") }
