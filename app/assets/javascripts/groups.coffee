@@ -12,6 +12,7 @@ jQuery ->
 	set_selected_group = (name, id) ->
 		console.log("Group = " + name)
 		$('#groups_join_submit').val('Ask to join group "' + name + '"')
+		# Rajouter la valeur dans le champs caché
 
 	# autocomplete pour la recherche de groups pour demander à le rejoindre
 	$('#searchgroups').autocomplete
@@ -29,3 +30,10 @@ jQuery ->
 		if e.which == 13	# \n ASCII code
 			e.preventDefault()
 		)
+
+	#  faire apparaître le modal de groupes
+	$('#link_to_my_groups, .close_modal_link').click((event)->
+		event.preventDefault()
+		$('#modal_wrapper').fadeToggle()
+		)
+)
