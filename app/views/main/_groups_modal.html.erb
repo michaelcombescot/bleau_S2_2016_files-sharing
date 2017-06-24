@@ -2,27 +2,41 @@
 <div id="modal_wrapper">
 	<div id="groups_modal_box">
 		<a href="#" class="btn close_modal_link">X</a>
-		<p>My groups</p>
+		<h1>My groups</h1>
 		<!-- visualisation des groupes appartenants à l'utilisateur courant -->
-		<p>Groups I own</p>
-		<% owned_groups_entities.each do |og| %>
-			<div>
-				<%= link_to og.name, og.type %>
-			</div>
+		<p class="group_modal_section_title">Groups I own</p>
+		<% if owned_groups_entities.empty?  %>
+			<p><small>You didn't create any group</small></p>
+		<% else %>
+			<% owned_groups_entities.each do |og| %>
+				<p><%= link_to og.name, og.type %></p>
+			<% end %>
 		<% end %>
 		<!-- visualisation des groupes auxquels l'utilisateur courant appartient -->
-		<p>Groups I'm in</p>
-		<% in_groups_entities.each do |og| %>
-			<div>
-				<%= link_to og.name, og.type %>
-			</div>
+		<p class="group_modal_section_title">Groups I'm in</p>
+		<% if in_groups_entities.empty?  %>
+			<p><small>You don't belong to any group</small></p>
+		<% else %>
+			<% in_groups_entities.each do |ig| %>
+				<p><%= link_to ig.name, ig.type %></p>
+			<% end %>
 		<% end %>
 		<!-- lien vers l'ajout de nouveaux groupes -->
-		<%= form_tag("/search_groups", method: "get", id: 'searchgroupsform') do |f| %>
-			<%= text_field_tag :search, nil, placeholder: 'search', id: 'searchgroups' %>
-			<%= submit_tag "Ask to join", id: 'submit' %>
+		<%= form_tag send_group_request_path, method: "post", id: 'searchgroupsform' do %>
+			<%= hidden_field_tag :id, nil, id: 'requested_group_id' %>
+			<span id="autocomplete_field_and_menu">
+				<%= text_field_tag :search, nil, placeholder: 'search in existing groups', id: 'searchgroups', required: true %>
+				<!-- Permet l'affichage du menu des propositions avec l'option appendTo, pas nécessaire en temps
+						 normal mais ici avec le z-index le menu n'était pas visible -->
+				<div id="autocomplete_suggestions"></div>
+			</span>
+			<%= button_tag "Ask to join", id: 'submit_request_to_join_group', class: "btn btn-primary" %>
+			<div id="current_join_requests">
+				<p>You asked to join tu following groups:</p>
+				<ul id="requested_groups"></ul>
+			</div>
 		<% end %>
 		<!-- lien vers la création d'un groupe -->
-		<%= button_to 'Create group', new_group_path, method: :get %>
+		<%= button_to 'Create a new group', new_group_path, method: :get, class: "btn btn-primary", id: "create_new_group" %>
 	</div>
 </div>

@@ -2,14 +2,16 @@ class Medium < ApplicationRecord
 	# carrierwave
 	mount_uploader :file, FileUploader
 
-	validates :name, presence: true
-	validates :file, presence: true
+	validates_presence_of :name
+	validates_presence_of :file
 
 	belongs_to :user
 	has_many :shared_withs, dependent: :destroy, inverse_of: :medium
 	has_many :entities, through: :shared_withs
 
 	accepts_nested_attributes_for :shared_withs, reject_if: lambda{ |a| a[:selected] == '0'}
+
+	before_save :update_file_size_and_extension
 
 	# chercher dans tous les fichiers du site
 	scope :search_all, -> (search) { where(Medium.arel_table[:name].matches("%#{search}%").and(Medium.arel_table[:visible_to_all].eq(true))) }
@@ -75,11 +77,9 @@ class Medium < ApplicationRecord
 		Group.my_related_groups(current_user).map { |g| g.entity.id }
 	end
 
-  	def update_file_size_and_extension
-	    if file.present? && file_changed?
-			self.extension = file.file.extension
-			self.size = file.file.size
-	    end
-    end
+	def update_file_size_and_extension
+		self.extension = file.file.extension
+		self.size = file.file.size
+  end
 
 end

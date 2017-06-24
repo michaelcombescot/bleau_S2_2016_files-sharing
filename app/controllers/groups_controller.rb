@@ -1,15 +1,17 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :send_request]
+  before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   def search_groups
-    render json: Group.search_regex(current_user, params[:term]).map { |g| g.entity }
+    render json: Group.search_groups(current_user, params[:term]).map { |g| g.entity }
   end
 
   def send_request
-    @request = UsersInGroup.new
-    @request.group = @group
-    @request.user = current_user
-    @request.save
+    entity = Entity.find_by_id(params[:id])
+    if entity
+      group = entity.type
+      UsersInGroup.create(group_id: group.id, user_id: current_user.id)
+    end
+    head :no_content
   end
   # GET /groups
   # GET /groups.json

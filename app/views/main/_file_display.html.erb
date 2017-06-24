@@ -14,6 +14,8 @@
 			<%= link_to 'Download', download_path(path: medium.file, id: medium.id) %>
 			<%= link_to 'Update', edit_medium_path(medium) %>
 			<%= link_to 'Destroy', medium, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% elsif medium.visible_to_all %>
+			<%= link_to 'Download', download_path(path: medium.file, id: medium.id) %>
 		<% end %>
 	</div>
 </div>

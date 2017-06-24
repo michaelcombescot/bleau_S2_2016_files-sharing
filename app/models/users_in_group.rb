@@ -2,6 +2,8 @@ class UsersInGroup < ApplicationRecord
 	belongs_to :user
 	belongs_to :group
 
+	validates :user_id, uniqueness: { scope: [:group_id] }
+
 	scope :get_requests, -> (group) {
 		where(UsersInGroup.arel_table[:user_id].eq(user.id))
 		.and(UsersInGroup.arel_table[:group_id].eq(group.id))

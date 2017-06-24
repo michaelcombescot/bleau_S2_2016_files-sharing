@@ -1,7 +1,7 @@
 class Group < ApplicationRecord
 	belongs_to :master, class_name: 'Entity'
 	has_one :entity, as: :type, dependent: :destroy
-	has_many :users_in_groups
+	has_many :users_in_groups, dependent: :destroy
 	has_many :users, through: :users_in_groups
 
 	accepts_nested_attributes_for :entity
@@ -18,18 +18,16 @@ class Group < ApplicationRecord
 			.where(
 				(Group.arel_table[:master_id]
 					.eq(current_user.entity.id))
-					.or(UsersInGroup.arel_table[:user_id].eq(current_user.id))
+					.or(UsersInGroup.arel_table.grouping(UsersInGroup.arel_table[:user_id].eq(current_user.id).and(UsersInGroup.arel_table[:validated].eq(true))))
 			)
 	}
 
 	# récupérer tous les groupes matchant la regex auxquels l'utilisateur courant n'est pas déjà associé
-	scope :search_regex, -> (current_user, regex) {
+	scope :search_groups, -> (current_user, regex) {
 		joins(:entity)
 		.where(
 			Entity.arel_table[:name].matches("%#{regex}%")
-			.and(Group.arel_table[:id].not_in(
-				Group.my_related_groups(current_user).map{ |g| g.id }
-			))
+			.and(Group.arel_table[:id].not_in(Group.my_related_groups(current_user)))
 		)
 	}
 end

@@ -10,6 +10,6 @@ module MainHelper
 	end
 
 	def in_groups_entities(user = current_user)
-		user.groups.map {|g| g.entity}
+		Group.my_related_groups(user).map {|g| g.entity}
 	end
 end

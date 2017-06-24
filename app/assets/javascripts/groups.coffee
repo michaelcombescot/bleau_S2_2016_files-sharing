@@ -3,25 +3,22 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 # check si DOM ready
-jQuery ->
-	console.log("Groups:")
-	$.getJSON('/search_groups?term=', (data) ->
-		$.map(data, (item) ->
-			console.log((label: item.name, value: item.name, id: item.id))))
+$(document).on('turbolinks:load', ->
 
-	set_selected_group = (name, id) ->
-		console.log("Group = " + name)
-		$('#groups_join_submit').val('Ask to join group "' + name + '"')
-		# Rajouter la valeur dans le champs caché
+	# ajoute l'id de l'entité sélectionnée dans le champ caché
+	set_selected_group = (id) ->
+		$('#requested_group_id').val(id)
 
 	# autocomplete pour la recherche de groups pour demander à le rejoindre
 	$('#searchgroups').autocomplete
 		source: (request, response) ->
 			$.getJSON('/search_groups?term=' + request.term, (data) ->
 				response($.map(data, (item) ->
-					return(label: item.name, value: item.name, id: item.id))))
+					return(label: item.name, id: item.id))))
 		select:  (event, ui) ->
-			set_selected_group(ui.item.label, ui.item.id)
+			console.log(ui.item)
+			set_selected_group(ui.item.id)
+		appendTo: "#autocomplete_suggestions"
 		# permet la sélection auto du premier élément de la liste
 		autoFocus: true
 
@@ -29,11 +26,18 @@ jQuery ->
 	$('#search_groups').on('keydown', (e) ->
 		if e.which == 13	# \n ASCII code
 			e.preventDefault()
-		)
+	)
 
-	#  faire apparaître le modal de groupes
+	# affichage/disparition du modal de groupes
 	$('#link_to_my_groups, .close_modal_link').click((event)->
 		event.preventDefault()
 		$('#modal_wrapper').fadeToggle()
-		)
+	)
+	$('#modal_wrapper').click((event)->
+		$(this).fadeToggle()
+	)
+	$('#groups_modal_box').click((event)->
+		event.stopPropagation()
+	)
+
 )

@@ -7,7 +7,7 @@
 #modal_wrapper
 {
 	position: fixed;
-	z-index: 99999;
+	z-index: 998;
 	display: none;
 	height: 100%;
 	width: 100%;
@@ -31,6 +31,11 @@
 		justify-content: center;
 		max-width: 90%;
 
+		h1 {
+			font-size: 30px;
+			margin-bottom: 30px;
+		}
+
 		.close_modal_link
 		{
 			position: absolute;
@@ -38,6 +43,22 @@
 			right: -0.5em;
 			font-weight: bold;
 			font-size: 1.5em;
+		}
+
+		.group_modal_section_title {
+			font-weight: bold;
+		}
+
+		#autocomplete_field_and_menu {
+			display: inline-block;
+		}
+
+		#create_new_group {
+			margin-top: 30px;
+		}
+
+		#current_join_requests {
+			text-align: center;
 		}
 	}
 }

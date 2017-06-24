@@ -5,5 +5,7 @@ class CreateEntities < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+      add_index :users, :name, unique: true
   end
 end

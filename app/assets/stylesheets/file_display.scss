@@ -11,6 +11,7 @@
 	padding: 0.6em;
 	background-color: $background_color3;
 	border-radius: 2px;
+	border: 1px solid $background_color3;
 	max-width: 300px;
 	@include transition(all 0.3s);
 
@@ -54,5 +55,5 @@
 
 .file_display:hover
 {
-	@include transform(scale(1.025));
+	border-color: white;
 }

@@ -2,7 +2,7 @@ class MediaController < ApplicationController
   before_action :set_medium, only: [:show, :edit, :update, :destroy, :download]
 
   def download
-    if !(authorize @medium)
+    if not authorize @medium
       flash[:alert] = "You can't download this file"
       render "main/index"
     end

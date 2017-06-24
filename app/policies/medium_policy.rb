@@ -17,12 +17,13 @@ class MediumPolicy
 	def is_user_authorized?
 		# propriétaire du fichier
 		has_file = true if @medium.user == @user
+
 		# fichier accessible via groupe
 		through_group = false
-
 		Group.my_related_groups(@user) do |g|
 			through_group ||= @medium.entities.include? g.entity
 		end
+		
 		# fichier accessible via partage individuel
 		through_individual = @medium.entities.include? @user.entity
 

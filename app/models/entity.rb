@@ -6,7 +6,8 @@ class Entity < ApplicationRecord
 	has_many :shared_withs
 	has_many :media, through: :shared_withs
 
-	validates_uniqueness_of :name
+  validates_uniqueness_of :name, case_sensitive: false
+  validates_presence_of :name
 
 	accepts_nested_attributes_for :shared_withs
 
