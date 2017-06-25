@@ -13,9 +13,13 @@ Rails.application.routes.draw do
   get 'search_files' => 'main#search_files', as: :search_files_modal
   get 'home' => 'main#home', as: :home_modal
   get 'search_users' => 'media#search_users'
-  get 'search_groups' => 'groups#search_groups', as: :search_groups
-  post 'send_group_request' => 'groups#send_request', as: :send_group_request
   get 'search_home_pagination' => "main#search_home_pagination"
+
+  scope :groups do
+    get 'search_groups' => 'groups#search_groups', as: :search_groups
+    post 'send_group_request' => 'groups#send_request', as: :send_group_request
+    get 'my_groups' => 'groups#my_groups_modal', as: :my_groups_modal
+  end
   
 # CRUD
   resources :groups

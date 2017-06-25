@@ -1,18 +1,23 @@
 <div id="index_body">
-<!-- 	<% if @join_requests.any? %>
+	<!-- préviens si des requête de demande d'appartenance à un groupe possédé sont en
+			 cours -->
+	<% if @join_requests.any? %>
 			<div id="notifications">
 				<%= link_to 'My Groups', "#", id: "link_to_my_group_requests" %>
 			</div>
-	<% end %> -->
+	<% end %>
+
+	<!-- menu -->
 	<%= render "menu" %>
+
+	<!-- div pour l'affichage du modal de groupe, apparait en ajax avec 
+			 lien correpondant sur le menu -->
+	<div id="my_groups"></div>
 	
 	<!-- Barre de recherche de fichiers-->
 	<%= form_tag(search_files_modal_path, method: "get", id: 'search_files', remote: true) do |f| %>
-		<!-- arg1: nom, arg2: valeur par défaut, arg3+: autres options -->
 		<%= text_field_tag :search, nil, placeholder: 'search', id: 'search_files_text', class: "form-control" %>
-		<!-- arg1: nom, arg2: choix/valeur, obligatoirement array d'array, arg3+: autres options -->
 		<%= select_tag :select, options_for_select([['All', 'All'], ["My files", "My files"], ['Shared by my groups', 'Shared by my groups'], ['shared with me specifically', 'Shared with me'], ["All files downloadable", "All files downloadable"]]), id: "search_files_select", class: "form-control", selected: 'All' %>
-		<!-- arg1: nom, arg2+: autres options -->
 		<%= submit_tag "Go", id: 'submit', class: "btn-primary submit" %>
 	<% end %>
 

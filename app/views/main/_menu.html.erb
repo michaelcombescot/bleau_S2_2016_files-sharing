@@ -4,8 +4,5 @@
 	<% else %>
 		<%= link_to 'Home', root_path %>
 	<% end %>
-	<%= link_to 'My Groups', "#", id: "link_to_my_groups" %>
+	<%= link_to 'My Groups', my_groups_modal_path, remote: true %>
 </div>
-
-<!-- partial caché tant que le lien 'My Groups n'est pas cliqué -->
-<%= render "main/groups_modal" %>

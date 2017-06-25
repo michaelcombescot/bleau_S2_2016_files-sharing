@@ -4,61 +4,74 @@
 // Fenêtre des groupes //
 /////////////////////////
 
-#modal_wrapper
-{
-	position: fixed;
-	z-index: 998;
+#my_groups {
 	display: none;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	background-color: $modal_wrapper_background;
 
-	#groups_modal_box
+	#modal_wrapper
 	{
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		border-radius: 5px;
-		background: $secondary_background_color;
-		padding: 2em;
-		width: 50em;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		max-width: 90%;
+		position: fixed;
+		z-index: 578;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		background-color: $modal_wrapper_background;
 
-		h1 {
-			font-size: 30px;
-			margin-bottom: 30px;
-		}
-
-		.close_modal_link
+		#groups_modal_box
 		{
 			position: absolute;
-			top: -0.5em;
-			right: -0.5em;
-			font-weight: bold;
-			font-size: 1.5em;
-		}
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 5px;
+			background: $secondary_background_color;
+			padding: 2em;
+			width: 50em;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			max-width: 90%;
 
-		.group_modal_section_title {
-			font-weight: bold;
-		}
+			h1 {
+				font-size: 30px;
+				margin-bottom: 30px;
+			}
 
-		#autocomplete_field_and_menu {
-			display: inline-block;
-		}
+			.close_modal_link
+			{
+				position: absolute;
+				top: -0.5em;
+				right: -0.5em;
+				font-weight: bold;
+				font-size: 1.5em;
+			}
 
-		#create_new_group {
-			margin-top: 30px;
-		}
+			.group_modal_section_title {
+				font-weight: bold;
+			}
 
-		#current_join_requests {
-			text-align: center;
+			#search_groups_form {
+				margin-top: 20px;
+			}
+
+			#autocomplete_field_and_menu {
+				display: inline-block;
+			}
+
+			#requested_groups {
+				list-style: none;
+				padding-left: 0;
+				margin-top: 10px;
+			}
+
+			#create_new_group {
+				margin-top: 30px;
+			}
+
+			#current_join_requests {
+				text-align: center;
+			}
 		}
 	}
 }

@@ -68,12 +68,14 @@ class MediaController < ApplicationController
   # PATCH/PUT /media/1.json
   def update
     free_params = medium_params.dup
-    medium_params[:shared_withs_attributes].values.each_with_index do |attribute, i|
-      if attribute[:selected] == "0"
-        SharedWith.find(attribute[:id]).destroy
-        free_params[:shared_withs_attributes].delete(i.to_s)
-      else
-        attribute[:selected] = 0
+    if medium_params[:shared_withs_attributes]
+      medium_params[:shared_withs_attributes].values.each_with_index do |attribute, i|
+        if attribute[:selected] == "0"
+          SharedWith.find(attribute[:id]).destroy
+          free_params[:shared_withs_attributes].delete(i.to_s)
+        else
+          attribute[:selected] = 0
+        end
       end
     end
     respond_to do |format|
